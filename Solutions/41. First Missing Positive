@@ -1,0 +1,35 @@
+/*Given an unsorted integer array nums, return the smallest missing positive integer.
+
+You must implement an algorithm that runs in O(n) time and uses constant extra space.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,0]
+Output: 3
+Explanation: The numbers in the range [1,2] are all in the array.
+*/
+
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int i = 0;
+        bucketSort(&nums);
+        for (; i < nums.size() && nums[i] == i + 1; ++i);
+        return i + 1;
+    }
+
+private:
+    void bucketSort(vector<int> *nums) {
+        int i = 0;
+        while (i < nums->size()) {
+            if ((*nums)[i] > 0 && (*nums)[i] <= nums->size() &&
+                (*nums)[i] != (*nums)[(*nums)[i] - 1]) {
+                swap((*nums)[i], (*nums)[(*nums)[i] - 1]);
+            } else {
+                ++i;
+            }
+        }
+    }
+};
