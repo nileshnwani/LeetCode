@@ -1,0 +1,32 @@
+/*Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+
+The overall run time complexity should be O(log (m+n)).
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+Explanation: merged array = [1,2,3] and median is 2.*/
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        if ((nums1.size() + nums2.size()) % 2 == 1) {
+            return findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2 + 1);
+        } else {
+            return (findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2) +
+                    findKthInTwoSortedArrays(nums1, nums2, (nums1.size() + nums2.size()) / 2 + 1)) / 2.0;
+        }
+    }
+
+    int findKthInTwoSortedArrays(const vector<int>& A, const vector<int>& B,
+                                 int k) {
+        const int m = A.size();
+        const int n = B.size();
+
+        // Make sure m is the smaller one.
+        if (m > n) {
+            return findKthInTwoSortedArrays(B, A, k);
+        }
