@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        string res = "1";
+        while(n-- > 1){  // 循环产生第n个串
+            string tmp;
+            int low=0, high=1;
+            while(low < res.size()){
+                while(high < res.size() && res[high] == res[low]) high++;
+                tmp += (high - low + '0');
+                tmp += res[low];
+                low = high;
+                high++;
+            }
+            res = tmp;
+        }
+        return res; 
+    }
+};
