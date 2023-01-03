@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+// @lc code=start
+typedef long long ll;
+class Solution {
+public:
+    
+    // TLE - all cases passing
+    // int divide(int dividend, int divisor) {
+    //     if(dividend==divisor){
+    //         return 1;
+    //     }
+    //     if(divisor>0&&dividend>=0&&divisor>dividend){
+    //         return 0;
+    //     }
+    //     if(divisor==1){
+    //         return dividend;
+    //     }
+    //     if(divisor==-1){
+    //         if(dividend==INT_MIN){
+    //             dividend+=1;
+    //         }
+    //         return -1*dividend;
+    //     }
+    //     int count=0;
+    //     ll a=abs((ll)dividend);
+    //     ll b=abs((ll)divisor);
+    //     while(a>=b){
+    //         count++;
+    //         a-=b;
+    //     }
+    //     if(dividend<=0&&divisor>0||dividend>=0&&divisor<0){
+    //         return -1*count;
+    //     }
+    //     return count;
+    // }
+
+    // BIT-Manipulation method
+    int divide(int dividend, int divisor) {
+        if(dividend==divisor){
+            return 1;
+        }
+        if(divisor>0&&dividend>=0&&divisor>dividend){
+            return 0;
+        }   
+        if(divisor==1){
+            return dividend;
+        }
+        if(divisor==-1){
+            if(dividend==INT_MIN){
+                dividend+=1;
+            }
+            return -1*dividend;
+        }
+        ll n=abs((ll)dividend);
+        ll m=abs((ll)divisor);
+        ll t=m; //used for shifting
+        ll count=0;
+        // multiply divisor by 2 till no more possible
+        for(int i=31;i>=0;i--){
+            if((t<<i)<=n){
+                t=t<<i;
+                count=1<<i;
+                break;
+            }
+        }
+        while(t+m<=n){
+            t+=m;
+            count++;
+        }
+        if(dividend<=0&&divisor>0||dividend>=0&&divisor<0){
+            return -1*count;
+        }
+        return (int)count;
+    }
+
+};
+// @lc code=end
